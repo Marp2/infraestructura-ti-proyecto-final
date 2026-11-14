@@ -1,0 +1,22 @@
+:root{--azul:#0a5ea8;--azul2:#0b3f73;--verde:#2e9d5b;--gris:#f3f6f9;--txt:#1d2733}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--txt);line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{background:var(--azul2);color:#fff}.nav{display:flex;justify-content:space-between;align-items:center;height:64px}
+.logo{color:#fff;text-decoration:none;font-weight:800;font-size:1.4rem}.logo small{font-weight:400;font-size:.8rem;opacity:.85;margin-left:6px}
+nav a{color:#fff;text-decoration:none;margin-left:22px;font-size:.95rem}nav a:hover{text-decoration:underline}
+.hero{background:linear-gradient(120deg,var(--azul2),var(--azul) 60%,#3aa0d8);color:#fff;padding:70px 0}
+.hero h1{font-size:2.4rem;margin:0 0 10px}.hero p{font-size:1.15rem;max-width:640px}
+.btn{display:inline-block;background:var(--verde);color:#fff;border:0;padding:12px 22px;border-radius:8px;font-weight:600;text-decoration:none;cursor:pointer;font-size:1rem}
+section{padding:36px 20px}.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+article{background:var(--gris);border-radius:12px;padding:22px;border-top:4px solid var(--azul)}
+.two{display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:center}
+.datos{display:grid;gap:12px}.datos div{background:var(--gris);border-radius:10px;padding:14px 18px}
+.datos b{display:block;font-size:1.6rem;color:var(--azul)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--gris);padding:20px;border-radius:12px;margin-bottom:26px}
+.form label{display:flex;flex-direction:column;font-weight:600;font-size:.9rem;gap:4px}.form .full{grid-column:1/-1}
+input,select,textarea{padding:9px;border:1px solid #c8d3de;border-radius:6px;font:inherit}
+table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:8px;border-bottom:1px solid #dde4ea;text-align:left}th{background:var(--azul2);color:#fff}
+.aviso{background:#e5f6ec;border-left:4px solid var(--verde);padding:10px 14px}
+footer{background:#111b26;color:#cfd8e2;padding:24px 0;font-size:.88rem;margin-top:30px}
+.ok{color:#5fe08f}.bad{color:#ff7b7b}.disc{opacity:.7}
+@media(max-width:700px){.two,.form{grid-template-columns:1fr}nav a{margin-left:10px}}
