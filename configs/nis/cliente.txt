@@ -1,0 +1,7 @@
+# Cliente NIS (anfitrión Ubuntu 26.04)
+/etc/defaultdomain   -> epanis
+/etc/yp.conf         -> domain epanis server 192.168.122.10
+/etc/nsswitch.conf   -> passwd: files systemd sss nis
+                        group:  files systemd sss nis
+                        shadow: files systemd sss nis
+PAM: pam-auth-update --enable mkhomedir

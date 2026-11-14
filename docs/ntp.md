@@ -152,7 +152,7 @@ w32tm /stripchart /computer:192.168.40.5 /samples:3 /dataonly
 
 1. Se desactivó "Establecer la hora automáticamente" y se cambió la hora manualmente.
 
-   ![Hora desajustada](evidencias/ntp/10-windows-hora-desajustada.png)
+   ![Hora desajustada](evidencias/ntp/10-windows-hor-desajustada.png)
 
 2. Se forzó la sincronización:
 
@@ -164,7 +164,7 @@ w32tm /stripchart /computer:192.168.40.5 /samples:3 /dataonly
 
 3. La hora volvió a ser la correcta:
 
-   ![Hora corregida](evidencias/ntp/12-windows-hora-corregida.png)
+   ![Hora corregida](evidencias/ntp/11-windows-resync.png)
 
 ### 7.4 El servidor registra al cliente
 
@@ -176,7 +176,7 @@ sudo chronyc clients
 
 Aparece la IP del equipo Windows con paquetes recibidos, lo que demuestra que el cliente consulta al servidor.
 
-![chronyc clients](evidencias/ntp/13-chronyc-clients.png)
+![chronyc clients](evidencias/ntp/12-chronyc-clients.png)
 
 ## 8. Resultado
 

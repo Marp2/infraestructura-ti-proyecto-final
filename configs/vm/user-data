@@ -1,0 +1,19 @@
+#cloud-config
+# Configuración inicial de la VM srv-epa (cloud-init). El hash y la llave son de ejemplo.
+hostname: srv-epa
+fqdn: srv-epa.epa.lan
+manage_etc_hosts: true
+timezone: America/Bogota
+users:
+  - name: epa
+    gecos: Administrador EPA
+    groups: [adm, sudo]
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    passwd: '<HASH generado con: openssl passwd -6>'
+    ssh_authorized_keys: ['<contenido de ~/.ssh/id_ed25519_epa.pub>']
+ssh_pwauth: true
+growpart: {mode: auto, devices: ['/']}
+package_update: true
+packages: [curl, net-tools]
