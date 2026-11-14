@@ -1,26 +1,38 @@
-# Guion del video (≈ 10–12 min)
+# Guion del video y la sustentación (≈ 11 min)
 
-Antes de grabar, en el anfitrión:
-```bash
-ping -c2 192.168.122.10                                    # VM arriba
-sudo sed -i -E '/nis/!s/^(passwd|group|shadow):(.*)$/\1:\2 nis/' /etc/nsswitch.conf
-sudo systemctl enable --now ypbind && ypwhich               # NIS activo → 192.168.122.10
-sudo mount -t nfs 192.168.122.10:/srv/nfs/empresa /mnt/empresa 2>/dev/null; df -hT | grep nfs
-```
-Ten abiertos: dos pestañas de terminal (**Linux** y **VM** con `ssh -i ~/.ssh/id_ed25519_epa epa@192.168.122.10`), el navegador con el panel de Dokploy y https://www.epa.lan, y el repositorio en GitHub.
+**Presentación:** [Infraestructura de TI para EPA Armenia](https://claude.ai/artifact/7yrXQEQibTgjpjPrHNMXiE) (14 diapositivas). Se avanza con las flechas del teclado.
 
-| # | Tiempo | Quién | Qué mostrar | Comando / acción |
-|---|---|---|---|---|
-| 1 | 0:00 | Integrante 1 | Presentación: EPA, problema y servicios propuestos | GitHub → `README.md` y `analisis.md` (tabla de requisitos) |
-| 2 | 1:00 | Integrante 1 | Arquitectura | `diagrama.mmd` en GitHub |
-| 3 | 1:45 | Integrante 1 | VM: recursos e IP fija; por qué KVM | Linux: `sudo virsh dominfo srv-epa` · VM: `hostnamectl; ip -4 -br addr` |
-| 4 | 2:45 | Integrante 1 | Dokploy: proyecto, app y BD en verde; despliegue desde Git | Navegador: panel → EPA Armenia → web-epa (Provider Git, Domains HTTPS) |
-| 5 | 3:45 | Integrante 1 | Web con HTTPS y BD | Navegador: https://www.epa.lan → radicar una PQR · VM: `sudo docker exec -it $(sudo docker ps -qf name=epa-armenia-bdepa) psql -U epa -d epa -c "SELECT id,tipo,nombre FROM pqr;"` |
-| 6 | 5:00 | Integrante 2 | NFS: exports, montaje, rw/ro, root_squash | VM: `sudo exportfs -v` · Linux: `df -hT \| grep nfs; echo demo > /mnt/empresa/tecnica/demo.txt; touch /mnt/publico/x` |
-| 7 | 6:00 | Integrante 2 | Samba: recursos y permisos | Linux: `smbclient -L //192.168.122.10 -U tecnico` · `smbclient //192.168.122.10/gerencia -U tecnico -c ls` (ACCESS_DENIED) · Archivos → `smb://192.168.122.10/empresa` |
-| 8 | 7:00 | Integrante 3 | NIS: usuarios centralizados | VM: `ypcat -h localhost passwd` · Linux: `grep cruiz /etc/passwd \|\| echo "no existe local"; su - cruiz` → `whoami; hostname` |
-| 9 | 8:15 | Integrante 4 | NTP | Linux: `chronyc sources` (`^* srv-epa`) · VM: `sudo chronyc clients` |
-| 10 | 9:00 | Integrante 4 | CUPS: imprimir desde cliente | Linux: `lp -h 192.168.122.10 -d PDF ~/factura.txt` · VM: `lpstat -W completed -o PDF; sudo ls /var/spool/cups-pdf/ANONYMOUS/` · navegador https://192.168.122.10:631/printers/ |
-| 11 | 10:00 | Integrante 1 | Problemas y soluciones, cierre | `documentacion.md` → tabla de problemas |
+## Antes de grabar o sustentar
 
-**Consejos:** aumenta la fuente del terminal (Ctrl + +), graba a pantalla completa (en Ubuntu: Ctrl + Alt + Shift + R inicia/detiene la grabación) y ensaya una vez antes. Si alguna compañera muestra su propia VM (NTP/CUPS con Windows), puede poner su parte grabada aparte.
+La VM y todos los servicios arrancan solos con el PC (se configuró una vez con `sudo bash scripts/preparar.sh`). El día de la grabación solo hay que:
+
+1. Prender el PC y esperar 2–3 minutos (Dokploy tarda en levantar).
+2. Revisar que todo esté en verde y abrir las pestañas:
+   ```bash
+   bash scripts/estado.sh
+   ```
+   Abre el sitio https://www.epa.lan, el panel de Dokploy, CUPS, la carpeta NFS `/mnt/empresa` y la carpeta Samba `smb://192.168.122.10/empresa`.
+3. Abrir la presentación en otra pestaña y dos terminales: **Linux** (anfitrión) y **VM** (`ssh -i ~/.ssh/id_ed25519_epa epa@192.168.122.10`).
+
+La columna **En vivo** es opcional: si hay poco tiempo, basta con la diapositiva y la pestaña ya abierta, sin escribir comandos.
+
+## Recorrido
+
+| # | Tiempo | Quién | Diapositiva | Qué decir | En vivo (opcional) |
+|---|---|---|---|---|---|
+| 1 | 0:00 | Integrante 1 | **1 · Portada** y **2 · El reto** | Qué es la EPA (acueducto, alcantarillado y aseo) y el objetivo: toda su infraestructura en una VM con Dokploy | — |
+| 2 | 0:45 | Integrante 1 | **3 · El equipo** | Qué hizo cada integrante | — |
+| 3 | 1:15 | Integrante 1 | **4 · Arquitectura** | Anfitrión con KVM → VM `srv-epa` (192.168.122.10) → servicios → clientes Linux y Windows | — |
+| 4 | 2:00 | Integrante 1 | **5 · Cada servicio, su puerto** | Puerto de cada servicio; la base de datos no se expone, solo la ve la app | — |
+| 5 | 2:30 | Integrante 1 | **6 · Servidor** | 2 vCPU, 4 GB, 40 GB, IP fija; cloud-init; por qué KVM y no VirtualBox (Secure Boot) | VM: `hostnamectl; ip -4 -br addr` |
+| 6 | 3:30 | Integrante 1 | **7 · Web y HTTPS** | Despliegue desde Git con Dockerfile; Traefik redirige a HTTPS con certificado `*.epa.lan` | Pestaña https://www.epa.lan (candado) y panel de Dokploy → EPA Armenia en verde |
+| 7 | 4:30 | Integrante 1 | **8 · Base de datos** | Formulario PQR → app Node (`DATABASE_URL`) → PostgreSQL 16 | Radicar una PQR en el sitio · VM: `sudo docker exec -it $(sudo docker ps -qf name=epa-armenia-bdepa) psql -U epa -d epa -c "SELECT id,tipo,nombre FROM pqr;"` |
+| 8 | 5:30 | Integrante 2 | **9 · Archivos compartidos** (panel NFS) | Dos exports: empresa (rw, `root_squash`) y público (solo lectura) | Pestaña de la carpeta `/mnt/empresa` · Linux: `echo demo > /mnt/empresa/tecnica/demo.txt; touch /mnt/publico/x` (falla: solo lectura) |
+| 9 | 6:15 | Integrante 2 | **9 · Archivos compartidos** (panel Samba) | Carpeta del grupo y carpeta privada de Gerencia con `valid users` | Pestaña `smb://192.168.122.10/empresa` · Linux: `smbclient //192.168.122.10/gerencia -U tecnico -c ls` (ACCESS_DENIED) |
+| 10 | 7:00 | Integrante 3 | **10 · Usuarios y hora** (panel NIS) | Usuarios creados una vez en el servidor; el cliente los resuelve por NIS y `mkhomedir` crea su carpeta | Linux: `grep cruiz /etc/passwd \|\| echo "no existe local"; su - cruiz` → `whoami; hostname` |
+| 11 | 8:00 | Integrante 4 | **10 · Usuarios y hora** (panel NTP) | `srv-epa` toma la hora de internet y la sirve a la red por el puerto 123 | Linux: `chronyc sources` (`^* srv-epa`) · VM: `sudo chronyc clients` |
+| 12 | 8:45 | Integrante 4 | **11 · Impresión** | `cups-pdf` como impresora virtual, compartida por IPP (631), probada desde Windows | Pestaña de CUPS (impresora PDF compartida) · Linux: `lp -h 192.168.122.10 -d PDF ~/factura.txt` |
+| 13 | 9:45 | Integrante 1 | **12 · Lo que aprendimos** | Los cuatro problemas y cómo se resolvieron | — |
+| 14 | 10:30 | Integrante 1 | **13 · En resumen** y **14 · ¿Preguntas?** | Un servidor, siete servicios, cero cambios en Windows; todo está documentado en el repositorio | Pestaña de GitHub con el repositorio |
+
+**Consejos:** aumenta la fuente del terminal (Ctrl + +), graba a pantalla completa (en Ubuntu: Ctrl + Alt + Shift + R inicia y detiene la grabación) y ensaya una vez antes. Si alguna compañera muestra su propia VM (NTP/CUPS con Windows), puede grabar su parte aparte y pegarla en las filas 11 y 12.
