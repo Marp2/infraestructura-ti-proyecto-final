@@ -1,0 +1,10 @@
+# /etc/dokploy/traefik/dynamic/epa-tls.yml — certificado autofirmado *.epa.lan para Traefik (Dokploy)
+tls:
+  certificates:
+    - certFile: /etc/dokploy/traefik/dynamic/certificates/epa/epa.crt
+      keyFile: /etc/dokploy/traefik/dynamic/certificates/epa/epa.key
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /etc/dokploy/traefik/dynamic/certificates/epa/epa.crt
+        keyFile: /etc/dokploy/traefik/dynamic/certificates/epa/epa.key
