@@ -1,0 +1,35 @@
+graph LR
+    subgraph LAN["Red de la empresa"]
+        WIN[PC Windows<br/>192.168.1.x]
+        HOST[Anfitrión Ubuntu 26.04<br/>cliente Linux<br/>192.168.122.1 / 192.168.1.39]
+    end
+
+    subgraph KVM["KVM/libvirt · red NAT 192.168.122.0/24"]
+        subgraph SRV["VM srv-epa · Ubuntu Server 24.04 · 192.168.122.10"]
+            subgraph DK["Dokploy (Docker Swarm)"]
+                TR[Traefik<br/>80/443 · HTTPS *.epa.lan]
+                WEB[web-epa<br/>Node.js + Express]
+                DB[(PostgreSQL 16<br/>bd-epa)]
+                PANEL[Panel Dokploy :3000]
+            end
+            NTP[NTP · chrony :123/udp]
+            NFS[NFS :2049]
+            NIS[NIS · ypserv]
+            CUPS[CUPS :631]
+            SMB[Samba :139/445]
+        end
+    end
+
+    HOST -->|https://www.epa.lan| TR
+    TR --> WEB
+    WEB --> DB
+    HOST -->|mount nfs4| NFS
+    HOST -->|ypbind / su| NIS
+    HOST -->|chronyc| NTP
+    HOST -->|lp / IPP| CUPS
+    HOST -->|smbclient| SMB
+    WIN -->|SMB vía reenvío 445 del anfitrión| SMB
+    WIN -.->|NTP / IPP · VM Integrante 4| NTP
+    NIS --> AUTH[Autenticación centralizada]
+    NFS --> CLN[Clientes NFS]
+    SMB --> CLW[Clientes Windows/Mac]

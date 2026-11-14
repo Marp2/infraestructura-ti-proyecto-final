@@ -1,0 +1,6 @@
+# Servidor NIS (srv-epa) — dominio epanis
+/etc/defaultdomain        -> epanis
+/etc/default/nis          -> NISSERVER=master
+/etc/ypserv.securenets    -> 255.255.255.0   192.168.122.0   (se comentó 0.0.0.0)
+/var/yp/Makefile          -> MINUID=2000  MINGID=2000  MERGE_PASSWD=true
+Mapas: sudo /usr/lib/yp/ypinit -m      Actualizar: cd /var/yp && sudo make
