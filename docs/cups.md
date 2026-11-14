@@ -50,7 +50,7 @@ sudo lpadmin -p PDF -o printer-is-shared=true
 lpstat -l -p PDF | grep -i shared
 ```
 
-El archivo de configuración final está en [`configs/cups/cupsd.conf`](../configs/cups/cupsd.conf).
+La configuración de `cupsd.conf` resultante (generada por `cupsctl`) está en [`configs/cups/cupsd.conf`](../configs/cups/cupsd.conf).
 
 ### 4.3 Ubicación de los PDF generados
 
@@ -125,7 +125,6 @@ Se accede desde `https://192.168.40.5:631/printers/`. El navegador muestra la ad
 
 Windows detectó la impresora compartida por la red como **PDF @ cliente-ubuntu**.
 
-![Windows detecta la impresora](evidencias/cups/10-windows-detecta-impresora.png)
 
 ### 6.2 Agregar la impresora
 

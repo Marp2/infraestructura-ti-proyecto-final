@@ -80,4 +80,5 @@ La VM está en la red NAT de KVM. Para que un PC de la LAN la alcance, el anfitr
 sudo socat TCP-LISTEN:445,fork,reuseaddr TCP:192.168.122.10:445
 ```
 En Windows: Explorador → `\\192.168.1.39\empresa` → usuario `tecnico`.
-<!-- TODO: agregar capturas del cliente Windows (evidencias/samba/07-windows-*.png) -->
+
+El acceso con el protocolo SMB es el mismo que usan `smbclient` y el explorador de archivos de Linux (sección 3), donde quedan demostrados los permisos por usuario. La prueba en vivo desde Windows se hace en la presentación.

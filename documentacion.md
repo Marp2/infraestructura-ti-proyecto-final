@@ -29,6 +29,10 @@ Cada servicio tiene su documento con los **comandos usados, para qué sirve cada
 | CUPS | Anfitrión | `lpstat -h 192.168.122.10 -p` | impresora `PDF` inactiva (lista) |
 | Samba | Anfitrión | `smbclient -L //192.168.122.10 -U tecnico` | `empresa`, `gerencia` |
 
+## Video y presentación
+
+El guion paso a paso del video está en [docs/guion-video.md](docs/guion-video.md).
+
 ## Puesta en marcha para la presentación
 
 1. Arrancar Ubuntu desde el disco externo. La VM arranca sola (`virsh autostart`).
