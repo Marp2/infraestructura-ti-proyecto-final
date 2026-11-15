@@ -5,6 +5,12 @@
 
 Infraestructura de servicios de la EPA sobre un servidor local: **Dokploy** como PaaS para la web y la base de datos, más los servicios Linux tradicionales (**NTP, NFS, NIS, CUPS y Samba**).
 
+## Documento y presentación
+
+- 📄 **Documento del proyecto (Google Docs):** [Proyecto final: Infraestructura de TI para EPA Armenia](https://docs.google.com/document/d/1f6aSg6igFoL7xtZqNiyOYAE4ZpGhPJv29QTNsPPD5l0/edit?tab=t.ri6oxz1dskgg). Descripción, arquitectura, comandos de cada servicio con su explicación, 59 capturas, problemas y conclusiones.
+- 📊 **Presentación de la sustentación:** [Infraestructura de TI para EPA Armenia](https://claude.ai/artifact/7yrXQEQibTgjpjPrHNMXiE) (14 diapositivas).
+- 🎬 **Guion del video:** [docs/guion-video.md](docs/guion-video.md), con la diapositiva que va en cada momento.
+
 ## Resumen
 
 | Elemento | Valor |
@@ -35,6 +41,7 @@ Infraestructura de servicios de la EPA sobre un servidor local: **Dokploy** como
 ├── documentacion.md     # Índice técnico, verificación rápida, problemas
 ├── docs/                # Un documento por servicio (comandos + para qué + capturas)
 │   └── evidencias/      # Capturas por servicio (vm, dokploy, web, bd, nfs, samba, nis, ntp, cups)
+├── scripts/             # preparar.sh (arranque automático) y estado.sh (revisión antes de sustentar)
 ├── configs/             # Configuraciones usadas (cloud-init, traefik, exports, smb.conf, nis, chrony)
 └── codigo/web-epa/      # Sitio institucional EPA (Node.js + PostgreSQL, Dockerfile)
 ```
